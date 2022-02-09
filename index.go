@@ -1,8 +1,8 @@
 package list
 
 import (
-	"github.com/intdxdt/math"
 	"github.com/intdxdt/deque"
+	"github.com/intdxdt/math"
 )
 
 const N = 32

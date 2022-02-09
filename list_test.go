@@ -1,13 +1,13 @@
 package list
 
 import (
-	"testing"
 	"fmt"
 	"github.com/franela/goblin"
+	"testing"
 )
 
 var array = []float64{0, 1, 0, 2, 3, 4, 3, 3.3, 9, 29, 3.1, 0.1,
-                      1.1, 1.81, 0.91, 0.81, 0.71, 0.88, 0.82, 0.81,
+	1.1, 1.81, 0.91, 0.81, 0.71, 0.88, 0.82, 0.81,
 }
 
 func TestSSet(t *testing.T) {
@@ -55,7 +55,6 @@ func TestSSet(t *testing.T) {
 			g.Assert(lst.Len()).Equal(15)
 			lst.Clear()
 			g.Assert(lst.Len()).Equal(0)
-
 
 		})
 
