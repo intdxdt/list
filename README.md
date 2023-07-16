@@ -1,2 +1,2 @@
 # list
-list for go - based array indexable deque
+list for go - based array index(able) deque
