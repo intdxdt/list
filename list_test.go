@@ -17,7 +17,7 @@ func TestSSet(t *testing.T) {
 
 		g.It("should test list of items", func() {
 
-			var lst = NewList()
+			var lst = NewList[string]()
 			lst.Append("foo")
 			//head and tail should be the same
 			g.Assert(lst.First()).Eql(lst.Last())
@@ -59,7 +59,7 @@ func TestSSet(t *testing.T) {
 		})
 
 		g.It("should test list util funcs", func() {
-			var lst = NewList(1)
+			var lst = NewList[string](1)
 			g.Assert(lst.Pop() == nil).IsTrue()
 			g.Assert(lst.PopLeft() == nil).IsTrue()
 			lst.AppendLeft("first")
@@ -80,8 +80,8 @@ func TestSSet(t *testing.T) {
 			lst.AppendLeft("bar")
 			lst.Append("baz")
 			var each_item = []string{"bar", "foo", "baz"}
-			lst.Each(func(o interface{}, i int) bool {
-				g.Assert(o.(string)).Equal(each_item[i])
+			lst.Each(func(o string, i int) bool {
+				g.Assert(o).Equal(each_item[i])
 				return true
 			})
 			//head and tail should be the same
