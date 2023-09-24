@@ -32,19 +32,13 @@ func (lst *List[T]) Len() int {
 }
 
 // First - gets first item in the list
-func (lst *List[T]) First() interface{} {
-	if lst.Len() > 0 {
-		return lst.Get(0)
-	}
-	return nil
+func (lst *List[T]) First() T {
+	return lst.Get(0)
 }
 
 // Last - gets last item in the list
-func (lst *List[T]) Last() interface{} {
-	if lst.Len() > 0 {
-		return lst.Get(-1)
-	}
-	return nil
+func (lst *List[T]) Last() T {
+	return lst.Get(-1)
 }
 
 // Append - adds to end of list
@@ -60,31 +54,22 @@ func (lst *List[T]) AppendLeft(data T) *List[T] {
 }
 
 // Pop - removes item from the last of the list
-func (lst *List[T]) Pop() interface{} {
-	if lst.Len() == 0 {
-		return nil
-	}
+func (lst *List[T]) Pop() T {
 	return lst.Deque.Pop()
 }
 
 // PopLeft - removes item from front of list
-func (lst *List[T]) PopLeft() interface{} {
-	if lst.Len() == 0 {
-		return nil
-	}
+func (lst *List[T]) PopLeft() T {
 	return lst.Deque.PopLeft()
 }
 
 // At finds the item at given at index n - O(1)
 // Supports negative indexing
-func (lst *List[T]) At(n int) interface{} {
+func (lst *List[T]) At(n int) T {
 	if n < 0 {
 		n = lst.Len() + n
 	}
-	if n >= 0 && n < lst.Len() {
-		return lst.Deque.Get(n)
-	}
-	return nil
+	return lst.Deque.Get(n)
 }
 
 // Each - iterates over items in the list

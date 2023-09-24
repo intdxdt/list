@@ -58,41 +58,82 @@ func TestSSet(t *testing.T) {
 
 		})
 
+		g.It("should test panics1", func() {
+			var panics = 0
+			var panicFn = func() {
+				if err := recover(); err != nil {
+					panics += 1
+				}
+			}
+			var lst = NewList[string](1)
+			func() {
+				defer panicFn()
+				lst.Pop() //panic
+			}()
+			func() {
+				defer panicFn()
+				lst.PopLeft() //panic
+			}()
+			g.Assert(panics == 2).IsTrue()
+		})
+		g.It("should test panics2", func() {
+			var panics = 0
+			var panicFn = func() {
+				if err := recover(); err != nil {
+					panics += 1
+				}
+			}
+			var lst = NewList[string](1)
+			lst.AppendLeft("first")
+			lst.AppendLeft("second")
+
+			lst.PopLeft()
+			lst.PopLeft()
+			func() {
+				defer panicFn()
+				lst.First() //panic
+			}()
+			func() {
+				defer panicFn()
+				lst.Last() //panic
+			}()
+			func() {
+				defer panicFn()
+				lst.At(1) //panic
+			}()
+			g.Assert(panics == 3).IsTrue()
+		})
+
 		g.It("should test list util funcs", func() {
 			var lst = NewList[string](1)
-			g.Assert(lst.Pop() == nil).IsTrue()
-			g.Assert(lst.PopLeft() == nil).IsTrue()
 			lst.AppendLeft("first")
 			lst.AppendLeft("second")
-			g.Assert(lst.First().(string)).Equal("second")
-			g.Assert(lst.PopLeft().(string)).Equal("second")
-			g.Assert(lst.PopLeft().(string)).Equal("first")
-			g.Assert(lst.First() == nil).IsTrue()
+			g.Assert(lst.First()).Equal("second")
+			g.Assert(lst.PopLeft()).Equal("second")
+			g.Assert(lst.PopLeft()).Equal("first")
 			lst.AppendLeft("first")
 			lst.AppendLeft("second")
 			lst.Pop()
-			g.Assert(lst.First().(string)).Equal("second")
+			g.Assert(lst.First()).Equal("second")
 			lst.Pop()
-			g.Assert(lst.Last() == nil).IsTrue()
-			g.Assert(lst.At(1) == nil).IsTrue()
 
 			lst.Append("foo")
 			lst.AppendLeft("bar")
 			lst.Append("baz")
-			var each_item = []string{"bar", "foo", "baz"}
+			var eachItem = []string{"bar", "foo", "baz"}
 			lst.Each(func(o string, i int) bool {
-				g.Assert(o).Equal(each_item[i])
+				g.Assert(o).Equal(eachItem[i])
 				return true
 			})
 			//head and tail should be the same
 			g.Assert(lst.Len()).Equal(3)
-			g.Assert(lst.First().(string)).Equal("bar")
-			g.Assert(lst.Last().(string)).Equal("baz")
-			g.Assert(lst.Pop().(string)).Equal("baz")
-			g.Assert(lst.PopLeft().(string)).Equal("bar")
-			g.Assert(lst.First().(string)).Equal("foo")
-			g.Assert(lst.Last().(string)).Equal("foo")
-			g.Assert(lst.PopLeft().(string)).Equal("foo")
+			g.Assert(lst.First()).Equal("bar")
+			g.Assert(lst.Last()).Equal("baz")
+			g.Assert(lst.Pop()).Equal("baz")
+			g.Assert(lst.PopLeft()).Equal("bar")
+			g.Assert(lst.First()).Equal("foo")
+			g.Assert(lst.Last()).Equal("foo")
+			g.Assert(lst.PopLeft()).Equal("foo")
 
 		})
 	})
